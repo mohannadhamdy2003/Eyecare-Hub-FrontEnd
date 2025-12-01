@@ -4,12 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev": "vite",
     "build": "vite build",
-    "client": "start chrome http://localhost:5173 && vite",
-    "server": "start chrome http://localhost:5000 && json-server --watch src/db.json --port 5000",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
