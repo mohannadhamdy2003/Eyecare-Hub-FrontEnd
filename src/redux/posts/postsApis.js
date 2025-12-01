@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { successMessage } from "../toasts";
 
-const POSTS_URL = "eyecare-hub-backend-production.up.railway.app/posts";
-const USERS_URL = "eyecare-hub-backend-production.up.railway.app/users";
+const POSTS_URL = "http://eyecare-hub-backend-production.up.railway.app/posts";
+const USERS_URL = "http://eyecare-hub-backend-production.up.railway.app/users";
 
 // Get all posts for admin (full list of posts)
 const getAllPosts = async () => {
