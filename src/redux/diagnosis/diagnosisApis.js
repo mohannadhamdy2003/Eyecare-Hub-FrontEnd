@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const URL = "http://localhost:5000/users";
-const URL1 = "http://localhost:5000/doctors";
+const URL = "eyecare-hub-backend-production.up.railway.app/users";
+const URL1 = "eyecare-hub-backend-production.up.railway.app/doctors";
 
 // Fetch user diagnosis
 const getUserDiagnosis = async (userId) => {
@@ -47,9 +47,9 @@ const addUserDiagnosis = async ({ userId, diagnosisData }) => {
   try {
     const { data: userData } = await axios.get(`${URL}/${userId}`);
     const updatedDiagnosis = [diagnosisData, ...(userData.diagnosis || [])];
-    
+
     const res = await axios.patch(`${URL}/${userId}`, {
-      diagnosis: updatedDiagnosis
+      diagnosis: updatedDiagnosis,
     });
     return res.data;
   } catch (error) {
@@ -66,7 +66,7 @@ export const useAddUserDiagnosis = (userId, onSuccessCallback) => {
     onSuccess: () => {
       queryClient.invalidateQueries(["userDiagnosis", userId]);
       if (onSuccessCallback) onSuccessCallback();
-    }
+    },
   });
 };
 
@@ -75,9 +75,9 @@ const addDoctorDiagnosis = async ({ doctorId, diagnosisData }) => {
   try {
     const { data: doctorData } = await axios.get(`${URL1}/${doctorId}`);
     const updatedDiagnosis = [diagnosisData, ...(doctorData.diagnosis || [])];
-    
+
     const res = await axios.patch(`${URL1}/${doctorId}`, {
-      diagnosis: updatedDiagnosis
+      diagnosis: updatedDiagnosis,
     });
     return res.data;
   } catch (error) {
@@ -90,26 +90,31 @@ export const useAddDoctorDiagnosis = (doctorId, onSuccessCallback) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (diagnosisData) => addDoctorDiagnosis({ doctorId, diagnosisData }),
+    mutationFn: (diagnosisData) =>
+      addDoctorDiagnosis({ doctorId, diagnosisData }),
     onSuccess: () => {
       queryClient.invalidateQueries(["doctorDiagnosis", doctorId]);
       if (onSuccessCallback) onSuccessCallback();
-    }
+    },
   });
 };
 
 // Update existing diagnosis (for both user and doctor)
-const updateDiagnosis = async ({ entityId, diagnosisData, isDoctor = false }) => {
+const updateDiagnosis = async ({
+  entityId,
+  diagnosisData,
+  isDoctor = false,
+}) => {
   try {
     const baseUrl = isDoctor ? URL1 : URL;
     const { data } = await axios.get(`${baseUrl}/${entityId}`);
-    
-    const updatedDiagnosis = (data.diagnosis || []).map(diag => 
+
+    const updatedDiagnosis = (data.diagnosis || []).map((diag) =>
       diag.id === diagnosisData.id ? diagnosisData : diag
     );
 
     const res = await axios.patch(`${baseUrl}/${entityId}`, {
-      diagnosis: updatedDiagnosis
+      diagnosis: updatedDiagnosis,
     });
     return res.data;
   } catch (error) {
@@ -120,16 +125,16 @@ const updateDiagnosis = async ({ entityId, diagnosisData, isDoctor = false }) =>
 
 export const useUpdateDiagnosis = (entityId, isDoctor, onSuccessCallback) => {
   const queryClient = useQueryClient();
-  const queryKey = isDoctor 
-    ? ["doctorDiagnosis", entityId] 
+  const queryKey = isDoctor
+    ? ["doctorDiagnosis", entityId]
     : ["userDiagnosis", entityId];
 
   return useMutation({
-    mutationFn: (diagnosisData) => 
+    mutationFn: (diagnosisData) =>
       updateDiagnosis({ entityId, diagnosisData, isDoctor }),
     onSuccess: () => {
       queryClient.invalidateQueries(queryKey);
       if (onSuccessCallback) onSuccessCallback();
-    }
+    },
   });
 };

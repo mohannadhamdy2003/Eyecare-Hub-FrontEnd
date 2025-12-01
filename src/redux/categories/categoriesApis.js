@@ -3,7 +3,9 @@ import axios from "axios";
 
 export const getCategories = async (type) => {
   try {
-    const res = await axios.get(`http://localhost:5000/${type}`);
+    const res = await axios.get(
+      `eyecare-hub-backend-production.up.railway.app/${type}`
+    );
     return res.data;
   } catch (error) {
     console.log(error);

@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const URL = "http://localhost:5000/doctors";
+const URL = "eyecare-hub-backend-production.up.railway.app/doctors";
 
 const getDoctors = async () => {
   try {
@@ -23,7 +23,9 @@ export const useDoctors = () => {
 
 const getUsers = async () => {
   try {
-    const res = await axios.get("http://localhost:5000/users");
+    const res = await axios.get(
+      "eyecare-hub-backend-production.up.railway.app/users"
+    );
     return res.data;
   } catch (error) {
     console.log(error);

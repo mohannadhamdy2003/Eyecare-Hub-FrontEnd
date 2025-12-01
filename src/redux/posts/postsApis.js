@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { successMessage } from "../toasts";
 
-const POSTS_URL = "http://localhost:5000/posts";
-const USERS_URL = "http://localhost:5000/users";
+const POSTS_URL = "eyecare-hub-backend-production.up.railway.app/posts";
+const USERS_URL = "eyecare-hub-backend-production.up.railway.app/users";
 
 // Get all posts for admin (full list of posts)
 const getAllPosts = async () => {
@@ -31,7 +31,9 @@ const getUserSavedPosts = async (id) => {
     const userResponse = await axios.get(`${USERS_URL}/${id}`);
     const postsResponse = await axios.get(POSTS_URL);
 
-    const userPostsIds = Array.isArray(userResponse.data.savedPosts) ? userResponse.data.savedPosts : [];
+    const userPostsIds = Array.isArray(userResponse.data.savedPosts)
+      ? userResponse.data.savedPosts
+      : [];
     const allPosts = postsResponse.data || [];
 
     const userPosts = allPosts.filter((post) => userPostsIds.includes(post.id));
@@ -56,7 +58,9 @@ const savePost = async ({ userId, postId }) => {
   try {
     const { data } = await axios.get(`${USERS_URL}/${userId}`);
     const savedPostsArr = Array.isArray(data.savedPosts) ? data.savedPosts : [];
-    const updatedUserSavedPosts = savedPostsArr.includes(postId) ? savedPostsArr : [...savedPostsArr, postId];
+    const updatedUserSavedPosts = savedPostsArr.includes(postId)
+      ? savedPostsArr
+      : [...savedPostsArr, postId];
     const res = await axios.patch(`${USERS_URL}/${userId}`, {
       savedPosts: updatedUserSavedPosts,
     });
@@ -95,7 +99,9 @@ const removeSavedPost = async ({ userId, postId }) => {
       successMessage("Post removed from saved list");
       return res.data;
     }
-    console.log("The post you want to remove does not exist in user saved list.");
+    console.log(
+      "The post you want to remove does not exist in user saved list."
+    );
   } catch (error) {
     console.error("Error removing saved post:", error);
     throw error;

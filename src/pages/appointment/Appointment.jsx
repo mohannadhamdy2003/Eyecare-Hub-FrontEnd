@@ -2,7 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { FaCalendarAlt, FaUser, FaPhone, FaClipboardList, FaClock, FaUserMd, FaStar, FaMapMarkerAlt, FaChevronDown } from "react-icons/fa";
+import {
+  FaCalendarAlt,
+  FaUser,
+  FaPhone,
+  FaClipboardList,
+  FaClock,
+  FaUserMd,
+  FaStar,
+  FaMapMarkerAlt,
+  FaChevronDown,
+} from "react-icons/fa";
 import { useDoctors } from "../../redux/doctors/doctorsApis";
 import { useParams } from "react-router-dom";
 import { successMessage } from "../../redux/toasts";
@@ -18,8 +28,12 @@ const MedicalAppointmentBooking = () => {
   useEffect(() => {
     const getAppointments = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/appointments");
-        setAppointments_for_mostafa(res.data.filter((ap) => ["Pending", "Approved"].includes(ap.status)));
+        const res = await axios.get(
+          "eyecare-hub-backend-production.up.railway.app/appointments"
+        );
+        setAppointments_for_mostafa(
+          res.data.filter((ap) => ["Pending", "Approved"].includes(ap.status))
+        );
       } catch (error) {
         console.log(error);
       }
@@ -27,7 +41,9 @@ const MedicalAppointmentBooking = () => {
     getAppointments();
   }, []);
 
-  const existsSlots = existsAppointments.map((ap) => `${ap.time} ${ap.date} ${ap.day}`);
+  const existsSlots = existsAppointments.map(
+    (ap) => `${ap.time} ${ap.date} ${ap.day}`
+  );
   console.log(existsSlots);
 
   const dispatch = useDispatch();
@@ -50,7 +66,15 @@ const MedicalAppointmentBooking = () => {
     const formatDate = (date) => `${date.getMonth() + 1}/${date.getDate()}`;
 
     const getDayName = (date) => {
-      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
       return days[date.getDay()];
     };
 
@@ -80,7 +104,12 @@ const MedicalAppointmentBooking = () => {
   // Function to get booked dates for the selected doctor
   const getBookedDates = (doctorId) => {
     return existsAppointments
-      .filter((ap) => ap.doctorId === doctorId && ap.patientId !== currentUser?.id && ["Pending", "Approved"].includes(ap.status))
+      .filter(
+        (ap) =>
+          ap.doctorId === doctorId &&
+          ap.patientId !== currentUser?.id &&
+          ["Pending", "Approved"].includes(ap.status)
+      )
       .map((ap) => `${ap.date} ${ap.day}`)
       .filter((value, index, self) => self.indexOf(value) === index); // Remove duplicates
   };
@@ -122,13 +151,20 @@ const MedicalAppointmentBooking = () => {
 
   // Formik form configuration
   const validationSchema = Yup.object({
-    fullName: Yup.string().min(2, "Name must be at least 2 characters").required("Full name is required"),
-    age: Yup.number().min(1, "Age must be at least 1").max(120, "Age must be less than 120").required("Age is required"),
+    fullName: Yup.string()
+      .min(2, "Name must be at least 2 characters")
+      .required("Full name is required"),
+    age: Yup.number()
+      .min(1, "Age must be at least 1")
+      .max(120, "Age must be less than 120")
+      .required("Age is required"),
     phone: Yup.string()
       .matches(/^[0-9+\-\s()]+$/, "Invalid phone number format")
       .min(10, "Phone number must be at least 10 digits")
       .required("Phone number is required"),
-    symptoms: Yup.string().min(10, "Please provide more details about your symptoms").required("Symptoms description is required"),
+    symptoms: Yup.string()
+      .min(10, "Please provide more details about your symptoms")
+      .required("Symptoms description is required"),
   });
 
   const formik = useFormik({
@@ -150,7 +186,8 @@ const MedicalAppointmentBooking = () => {
     setSelectedTime("");
   };
 
-  const bookAppointmentHandler = (data) => dispatch(AppointmentOperationsApi(data));
+  const bookAppointmentHandler = (data) =>
+    dispatch(AppointmentOperationsApi(data));
 
   const handleBookAppointment = (patientData) => {
     if (!selectedTime || !selectedDate) {
@@ -193,11 +230,15 @@ const MedicalAppointmentBooking = () => {
   const getBookingStatus = (time) => {
     const selectedPeriod = `${time} ${selectedDate}`;
     const existingAppointment = existsAppointments.find(
-      (ap) => `${ap.time} ${ap.date} ${ap.day}` === selectedPeriod && ap.doctorId === selectedDoctor?.id
+      (ap) =>
+        `${ap.time} ${ap.date} ${ap.day}` === selectedPeriod &&
+        ap.doctorId === selectedDoctor?.id
     );
 
     if (existingAppointment) {
-      return existingAppointment.patientId === currentUser?.id ? "booked-by-current-user" : "booked-by-others";
+      return existingAppointment.patientId === currentUser?.id
+        ? "booked-by-current-user"
+        : "booked-by-others";
     }
     return "available";
   };
@@ -219,7 +260,9 @@ const MedicalAppointmentBooking = () => {
           <FaCalendarAlt className={styles.headerIcon} />
           Medical Appointment Booking
         </h1>
-        <p className={styles.headerSubtitle}>Book your appointment with our experienced doctors</p>
+        <p className={styles.headerSubtitle}>
+          Book your appointment with our experienced doctors
+        </p>
       </div>
 
       {/* Doctor Selector */}
@@ -229,7 +272,11 @@ const MedicalAppointmentBooking = () => {
           Select a Doctor
         </label>
         <div className={styles.selectWrapper}>
-          <select className={styles.select} value={selectedDoctor?.id || ""} onChange={handleDoctorChange}>
+          <select
+            className={styles.select}
+            value={selectedDoctor?.id || ""}
+            onChange={handleDoctorChange}
+          >
             {doctors?.map((doctor) => (
               <option key={doctor.id} value={doctor.id}>
                 {doctor.fullname} - {doctor.specialty}
@@ -247,10 +294,18 @@ const MedicalAppointmentBooking = () => {
           {selectedDoctor && (
             <div className={styles.card}>
               <div className={styles.doctorCard}>
-                <div className={styles.doctorImage}>{(selectedDate && selectedDoctor?.fullname.split(" ")[1]?.[0]) || "D"}</div>
+                <div className={styles.doctorImage}>
+                  {(selectedDate &&
+                    selectedDoctor?.fullname.split(" ")[1]?.[0]) ||
+                    "D"}
+                </div>
                 <div className={styles.doctorInfo}>
-                  <h3 className={styles.doctorName}>{selectedDoctor.fullname}</h3>
-                  <p className={styles.doctorSpecialty}>{selectedDoctor.specialty}</p>
+                  <h3 className={styles.doctorName}>
+                    {selectedDoctor.fullname}
+                  </h3>
+                  <p className={styles.doctorSpecialty}>
+                    {selectedDoctor.specialty}
+                  </p>
                   <div className={styles.doctorMeta}>
                     <span className="flex items-center gap-1">
                       <FaStar /> {selectedDoctor.ratings}
@@ -272,7 +327,11 @@ const MedicalAppointmentBooking = () => {
             </h3>
             <div className={styles.appointmentTabs}>
               <button
-                className={`${styles.tabButton} ${appointmentFor === "me" ? styles.tabActive : styles.tabInactive}`}
+                className={`${styles.tabButton} ${
+                  appointmentFor === "me"
+                    ? styles.tabActive
+                    : styles.tabInactive
+                }`}
                 onClick={() => {
                   setAppointmentFor("me");
                   formik.resetForm({
@@ -288,7 +347,11 @@ const MedicalAppointmentBooking = () => {
                 For Me
               </button>
               <button
-                className={`${styles.tabButton} ${appointmentFor === "other" ? styles.tabActive : styles.tabInactive}`}
+                className={`${styles.tabButton} ${
+                  appointmentFor === "other"
+                    ? styles.tabActive
+                    : styles.tabInactive
+                }`}
                 onClick={() => {
                   setAppointmentFor("other");
                   formik.resetForm({
@@ -322,14 +385,22 @@ const MedicalAppointmentBooking = () => {
                 <input
                   type="text"
                   name="fullName"
-                  className={`${styles.input} ${formik.touched.fullName && formik.errors.fullName ? styles.inputError : ""}`}
+                  className={`${styles.input} ${
+                    formik.touched.fullName && formik.errors.fullName
+                      ? styles.inputError
+                      : ""
+                  }`}
                   value={formik.values.fullName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Enter full name"
                   disabled={appointmentFor === "me"}
                 />
-                {formik.touched.fullName && formik.errors.fullName && <div className={styles.errorText}>{formik.errors.fullName}</div>}
+                {formik.touched.fullName && formik.errors.fullName && (
+                  <div className={styles.errorText}>
+                    {formik.errors.fullName}
+                  </div>
+                )}
               </div>
 
               <div className={styles.formGroup}>
@@ -340,14 +411,20 @@ const MedicalAppointmentBooking = () => {
                 <input
                   type="number"
                   name="age"
-                  className={`${styles.input} ${formik.touched.age && formik.errors.age ? styles.inputError : ""}`}
+                  className={`${styles.input} ${
+                    formik.touched.age && formik.errors.age
+                      ? styles.inputError
+                      : ""
+                  }`}
                   value={formik.values.age}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Enter age"
                   disabled={appointmentFor === "me"}
                 />
-                {formik.touched.age && formik.errors.age && <div className={styles.errorText}>{formik.errors.age}</div>}
+                {formik.touched.age && formik.errors.age && (
+                  <div className={styles.errorText}>{formik.errors.age}</div>
+                )}
               </div>
 
               <div className={styles.formGroup}>
@@ -358,14 +435,20 @@ const MedicalAppointmentBooking = () => {
                 <input
                   type="tel"
                   name="phone"
-                  className={`${styles.input} ${formik.touched.phone && formik.errors.phone ? styles.inputError : ""}`}
+                  className={`${styles.input} ${
+                    formik.touched.phone && formik.errors.phone
+                      ? styles.inputError
+                      : ""
+                  }`}
                   value={formik.values.phone}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Enter phone number"
                   disabled={appointmentFor === "me"}
                 />
-                {formik.touched.phone && formik.errors.phone && <div className={styles.errorText}>{formik.errors.phone}</div>}
+                {formik.touched.phone && formik.errors.phone && (
+                  <div className={styles.errorText}>{formik.errors.phone}</div>
+                )}
               </div>
 
               <div className={styles.formGroup}>
@@ -375,13 +458,21 @@ const MedicalAppointmentBooking = () => {
                 </label>
                 <textarea
                   name="symptoms"
-                  className={`${styles.textarea} ${formik.touched.symptoms && formik.errors.symptoms ? styles.inputError : ""}`}
+                  className={`${styles.textarea} ${
+                    formik.touched.symptoms && formik.errors.symptoms
+                      ? styles.inputError
+                      : ""
+                  }`}
                   value={formik.values.symptoms}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   placeholder="Describe your symptoms in detail..."
                 />
-                {formik.touched.symptoms && formik.errors.symptoms && <div className={styles.errorText}>{formik.errors.symptoms}</div>}
+                {formik.touched.symptoms && formik.errors.symptoms && (
+                  <div className={styles.errorText}>
+                    {formik.errors.symptoms}
+                  </div>
+                )}
               </div>
             </form>
           </div>
@@ -408,12 +499,24 @@ const MedicalAppointmentBooking = () => {
                       Select Date
                     </label>
                     <div className="relative">
-                      <select className={styles.dateDropdown} value={selectedDate} onChange={handleDateChange}>
+                      <select
+                        className={styles.dateDropdown}
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                      >
                         <option value="">Choose a date</option>
                         {Object.keys(availableSlots).map((dateKey) => {
-                          const isBooked = selectedDoctor && getBookedDates(selectedDoctor.id).includes(dateKey);
+                          const isBooked =
+                            selectedDoctor &&
+                            getBookedDates(selectedDoctor.id).includes(dateKey);
                           return (
-                            <option key={dateKey} value={dateKey} className={isBooked ? styles.dateOptionBooked : ""}>
+                            <option
+                              key={dateKey}
+                              value={dateKey}
+                              className={
+                                isBooked ? styles.dateOptionBooked : ""
+                              }
+                            >
                               {dateKey}
                             </option>
                           );
@@ -434,16 +537,30 @@ const MedicalAppointmentBooking = () => {
                           <div
                             key={index}
                             className={`${styles.timeSlot} 
-                              ${selectedTime === timeSlot.time ? styles.timeSlotSelected : ""}
-                              ${bookingStatus === "booked-by-current-user" ? styles.timeSlotBookedByCurrentUser : ""}
-                              ${bookingStatus === "booked-by-others" ? styles.timeSlotBookedByOthers : ""}`}
+                              ${
+                                selectedTime === timeSlot.time
+                                  ? styles.timeSlotSelected
+                                  : ""
+                              }
+                              ${
+                                bookingStatus === "booked-by-current-user"
+                                  ? styles.timeSlotBookedByCurrentUser
+                                  : ""
+                              }
+                              ${
+                                bookingStatus === "booked-by-others"
+                                  ? styles.timeSlotBookedByOthers
+                                  : ""
+                              }`}
                             onClick={() => {
                               if (!isDisabled) {
                                 setSelectedTime(timeSlot.time);
                               }
                             }}
                           >
-                            <div className={styles.timeSlotTime}>{timeSlot.time}</div>
+                            <div className={styles.timeSlotTime}>
+                              {timeSlot.time}
+                            </div>
                             <div className={styles.timeSlotLabel}>
                               {bookingStatus === "booked-by-current-user"
                                 ? "Your Booking"
@@ -465,7 +582,12 @@ const MedicalAppointmentBooking = () => {
               )}
 
               {/* Book Appointment Button */}
-              <button className={styles.bookButton} type="submit" onClick={formik.handleSubmit} disabled={!selectedTime || !selectedDate}>
+              <button
+                className={styles.bookButton}
+                type="submit"
+                onClick={formik.handleSubmit}
+                disabled={!selectedTime || !selectedDate}
+              >
                 <FaCalendarAlt />
                 Book Appointment
               </button>

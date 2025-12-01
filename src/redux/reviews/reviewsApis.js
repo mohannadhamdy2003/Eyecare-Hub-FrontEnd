@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const URL = "http://localhost:5000/doctors";
+const URL = "eyecare-hub-backend-production.up.railway.app/doctors";
 
 // update doctor rating function
 const updateRating = (reviews) => {
@@ -44,7 +44,9 @@ export const useAddReview = (doctorId, onSuccessCallback) => {
 const updateReview = async ({ doctorId, reviewData }) => {
   try {
     const { data } = await axios.get(`${URL}/${doctorId}`);
-    const updatedReviews = data.reviews.map((review) => (review.clientId === reviewData.clientId ? reviewData : review));
+    const updatedReviews = data.reviews.map((review) =>
+      review.clientId === reviewData.clientId ? reviewData : review
+    );
     const doctorRate = updateRating(updatedReviews);
     const res = await axios.patch(`${URL}/${doctorId}`, {
       reviews: updatedReviews,

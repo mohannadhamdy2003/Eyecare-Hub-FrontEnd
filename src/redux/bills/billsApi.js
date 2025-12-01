@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const URL = "http://localhost:5000/users";
+const URL = "eyecare-hub-backend-production.up.railway.app/users";
 
 // Get User Bills History
 const getUserBillsHistory = async (userId) => {
@@ -35,10 +35,15 @@ const addBillToUserHistory = async ({ userId, newBill }) => {
 
     // 3. Remove the purchased products from the user's cart
     const purchasedProductIds = newBill.products.map((product) => product.id); // Assuming each product has an 'id'
-    const updatedCart = user.cartInfo.cart.filter((cartItem) => !purchasedProductIds.includes(cartItem.product.id));
+    const updatedCart = user.cartInfo.cart.filter(
+      (cartItem) => !purchasedProductIds.includes(cartItem.product.id)
+    );
 
     // 4. Calculate the new total price of the cart
-    const newTotalPrice = updatedCart.reduce((total, cartItem) => total + cartItem.product.price * cartItem.quantity, 0);
+    const newTotalPrice = updatedCart.reduce(
+      (total, cartItem) => total + cartItem.product.price * cartItem.quantity,
+      0
+    );
 
     // 5. Update the user in the database with new billsHistory and updated cart
     const response = await axios.patch(`${URL}/${userId}`, {
