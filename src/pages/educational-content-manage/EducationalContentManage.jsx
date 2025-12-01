@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./educationalContentManage.module.css";
+import styles from "./EducationalContentManage.module.css";
 import {
   useAllPosts,
   useAddPost,
