@@ -10,7 +10,7 @@ import {
   FaFilter,
   FaTimes,
 } from "react-icons/fa";
-import styles from "./educationalContent.module.css";
+import styles from "./EducationalContentc.module.css";
 import {
   useAllPosts,
   useRemoveSavedPost,
