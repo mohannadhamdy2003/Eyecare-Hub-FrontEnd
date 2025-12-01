@@ -6,7 +6,7 @@ import {
   useRemoveSavedPost,
 } from "../../../redux/posts/postsApis";
 import { successMessage } from "../../../redux/toasts";
-import EducationalCard from "../../../components/EducationalCard/EducationalCard";
+import EducationalCard from "../../../components/educationalCard/EducationalCard";
 
 const Favorites = () => {
   const user = useSelector((state) => state?.auth?.user);
