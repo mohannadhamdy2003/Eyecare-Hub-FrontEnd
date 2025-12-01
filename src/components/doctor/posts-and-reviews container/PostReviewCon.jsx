@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useRef, useState } from "react";
 import { LoaderPage } from "../../common/loading spinners/Loaders";
-import styles from "./postReviewCon.module.css";
+import styles from "./PostReviewCon.module.css";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
-import StarRatingInput from "../../common/star rating/StarRatingInput";
+import StarRatingInput from "../../common/star-ratingc/StarRatingInput";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
 import { useAddReview, useUpdateReview } from "../../../redux/reviews/reviewsApis";
