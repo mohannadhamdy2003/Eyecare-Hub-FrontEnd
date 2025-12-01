@@ -1,8 +1,8 @@
 import { Navigate, useParams } from "react-router-dom";
 import { useDoctorById } from "../../redux/doctors/doctorsApis";
-import DoctorDetails from "../../components/doctor/doctor details/DoctorDetails";
+import DoctorDetails from "../../components/doctor/doctor-details/DoctorDetails";
 import styles from "./doctorInfo.module.css";
-import PostReviewCon from "../../components/doctor/posts and reviews container/PostReviewCon";
+import PostReviewCon from "../../components/doctor/posts-and-reviews container/PostReviewCon";
 import Review from "../../components/doctor/review/Review";
 import { useDoctorsAppointments } from "../../redux/appointments/appointmentApis";
 const DoctorInfoPage = () => {
@@ -25,11 +25,19 @@ const DoctorInfoPage = () => {
         <h1 className={styles.title}>Doctor's Information</h1>
         <div className={`container ${styles.container}`}>
           <div className={`${styles.doctorDetailsContainer}`}>
-            <DoctorDetails doctor={doctor?.data} appointmentCount={appointments.length} />
+            <DoctorDetails
+              doctor={doctor?.data}
+              appointmentCount={appointments.length}
+            />
           </div>
 
           <div className={`${styles.doctorReviewsContainer}`}>
-            <PostReviewCon title="Doctor's Reviews" data={doctor?.data.reviews || []} Component={Review} type="review" />
+            <PostReviewCon
+              title="Doctor's Reviews"
+              data={doctor?.data.reviews || []}
+              Component={Review}
+              type="review"
+            />
           </div>
         </div>
       </main>

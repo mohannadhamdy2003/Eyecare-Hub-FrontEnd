@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import CartItem from "../../components/products/cart item/CartItem";
+import CartItem from "../../components/products/cart-item/CartItem";
 import styles from "./cart.module.css";
 import { useNavigate } from "react-router-dom";
 import { CartOperationsApi } from "../../redux/auth/authApis";
@@ -9,7 +9,8 @@ function Cart({ setCheckoutPageKey }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const clearHandler = () => dispatch(CartOperationsApi({ operation: "clear", data: null }));
+  const clearHandler = () =>
+    dispatch(CartOperationsApi({ operation: "clear", data: null }));
 
   const buyHandler = () => {
     setCheckoutPageKey(true);
@@ -40,11 +41,14 @@ function Cart({ setCheckoutPageKey }) {
               <h1 className={styles.pageTitle}>
                 <span className={styles.titleIcon}>🛒</span>
                 Your Cart
-                {cartData?.isEmpty && <span className={styles.emptyBadge}>Empty</span>}
+                {cartData?.isEmpty && (
+                  <span className={styles.emptyBadge}>Empty</span>
+                )}
               </h1>
               {!cartData?.isEmpty && (
                 <p className={styles.itemCount}>
-                  {cartData.cart.length} item{cartData.cart.length !== 1 ? 's' : ''} in your cart
+                  {cartData.cart.length} item
+                  {cartData.cart.length !== 1 ? "s" : ""} in your cart
                 </p>
               )}
             </div>
@@ -56,28 +60,28 @@ function Cart({ setCheckoutPageKey }) {
               <div className={styles.emptyIcon}>🛍️</div>
               <h3>Your cart is waiting for some love</h3>
               <p>Discover amazing products and start shopping!</p>
-              <button 
+              <button
                 className={styles.continueShoppingBtn}
-                onClick={() => navigate('/market')}
+                onClick={() => navigate("/market")}
               >
                 Continue Shopping
               </button>
             </div>
           ) : (
             <>
-              {/* Cart Items */}
+              {/* cart-items */}
               <div className={styles.cartContent}>
                 <div className={styles.itemsList}>
                   {cartData.cart.map((p, index) => (
-                    <div 
-                      key={p.product.id} 
+                    <div
+                      key={p.product.id}
                       className={styles.itemWrapper}
-                      style={{ '--delay': `${index * 0.1}s` }}
+                      style={{ "--delay": `${index * 0.1}s` }}
                     >
-                      <CartItem 
-                        data={p.product} 
-                        quantity={p.quantity} 
-                        setCheckoutPageKey={setCheckoutPageKey} 
+                      <CartItem
+                        data={p.product}
+                        quantity={p.quantity}
+                        setCheckoutPageKey={setCheckoutPageKey}
                       />
                     </div>
                   ))}
@@ -87,7 +91,7 @@ function Cart({ setCheckoutPageKey }) {
                 <div className={styles.cartSummary}>
                   <div className={styles.summaryCard}>
                     <h3 className={styles.summaryTitle}>Order Summary</h3>
-                    
+
                     <div className={styles.summaryDetails}>
                       <div className={styles.summaryRow}>
                         <span>Subtotal</span>
@@ -109,7 +113,10 @@ function Cart({ setCheckoutPageKey }) {
                         <span className={styles.btnIcon}>💳</span>
                         Proceed to Checkout
                       </button>
-                      <button className={styles.clearBtn} onClick={clearHandler}>
+                      <button
+                        className={styles.clearBtn}
+                        onClick={clearHandler}
+                      >
                         <span className={styles.btnIcon}>🗑️</span>
                         Clear Cart
                       </button>

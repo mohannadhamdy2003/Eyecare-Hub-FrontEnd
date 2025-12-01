@@ -4,7 +4,7 @@ import styles from "./marketManage.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAddProduct, useDeleteProduct, useProducts, useUpdateProduct } from "../../redux/products/productsApis";
-import ProductCard from "../../components/products/product card/ProductCard";
+import ProductCard from "../../components/products/product-card/ProductCard";
 import { successMessage } from "../../redux/toasts";
 
 const validationSchema = Yup.object({

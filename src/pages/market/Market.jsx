@@ -2,7 +2,7 @@ import bg from "../../assets/market hero bg.png";
 import img from "../../assets/market hero img.svg";
 import Hero from "../../components/common/hero/Hero";
 import heroStyles from "../../components/common/hero/hero.module.css";
-import CardsContainer from "../../components/common/cards container/CardsContainer";
+import CardsContainer from "../../components/common/cards-container/CardsContainer";
 import { useProducts } from "../../redux/products/productsApis";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -25,7 +25,10 @@ function Market() {
     <>
       <div className={heroStyles.left}>
         <h1>Your Trusted Pharmacy for Complete Eye Care</h1>
-        <p>High-Quality Medications & Expert Guidance to Support Your Vision Health.</p>
+        <p>
+          High-Quality Medications & Expert Guidance to Support Your Vision
+          Health.
+        </p>
       </div>
       <div className={heroStyles.right}>
         <img src={img} alt="hero" />

@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { successMessage } from "../../redux/toasts";
 import { useAddDoctor, useDeleteDoctor, useDoctors, useUpdateDoctor } from "../../redux/doctors/doctorsApis";
-import DoctorCard from "../../components/doctor/doctor card/DoctorCard";
+import DoctorCard from "../../components/doctor/doctor-card/DoctorCard";
 
 const validationSchema = Yup.object({
   fullname: Yup.string().required("Full Name is required"),

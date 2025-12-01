@@ -2,7 +2,7 @@ import bg from "../../assets/market hero bg.png";
 import img from "../../assets/doctors hero img.svg";
 import Hero from "../../components/common/hero/Hero";
 import heroStyles from "../../components/common/hero/hero.module.css";
-import CardsContainer from "../../components/common/cards container/CardsContainer";
+import CardsContainer from "../../components/common/cards-container/CardsContainer";
 import { useDoctors } from "../../redux/doctors/doctorsApis";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -17,7 +17,10 @@ function Doctors() {
     <>
       <div className={heroStyles.left}>
         <h1>Introduce You To Our Experts</h1>
-        <p>Trusted Experts in Eye Health & Vision Care, Providing Advanced Treatments for a Clearer Future.</p>
+        <p>
+          Trusted Experts in Eye Health & Vision Care, Providing Advanced
+          Treatments for a Clearer Future.
+        </p>
       </div>
       <div className={heroStyles.right}>
         <img src={img} alt="hero" />
@@ -29,17 +32,20 @@ function Doctors() {
     error: doctorsQuery.error,
     categories: [
       { label: "All", value: "all" },
-      ...[...new Set(doctorsQuery.data?.map((doc) => doc.specialty))].map((specialty) => ({
-        label: specialty,
-        value: specialty,
-      })),
+      ...[...new Set(doctorsQuery.data?.map((doc) => doc.specialty))].map(
+        (specialty) => ({
+          label: specialty,
+          value: specialty,
+        })
+      ),
     ],
     defaultCategory: "all", // You can change this if you want a specific default
     cards: doctorsQuery.data,
     type: "doctors",
   };
 
-  if (["doctor", "admin"].includes(role)) return <Navigate to="/unauthorized" />;
+  if (["doctor", "admin"].includes(role))
+    return <Navigate to="/unauthorized" />;
 
   return (
     <>

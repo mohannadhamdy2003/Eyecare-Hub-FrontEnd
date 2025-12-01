@@ -1,10 +1,20 @@
 import styles from "./styles/SideMenu.module.css";
-import DoctorCard from "../../../components/doctor/doctor card/DoctorCard";
+import DoctorCard from "../../../components/doctor/doctor-card/DoctorCard";
 import EducationalCard from "../../../components/EducationalCard/EducationalCard";
-import ProductCard from "../../../components/products/product card/ProductCard"; // Import ProductCard
+import ProductCard from "../../../components/products/product-card/ProductCard"; // Import ProductCard
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
-export default function SideMenu({ isOpen, onClose, title, items, userRole, savePost, removePost, userPosts, successMessage }) {
+export default function SideMenu({
+  isOpen,
+  onClose,
+  title,
+  items,
+  userRole,
+  savePost,
+  removePost,
+  userPosts,
+  successMessage,
+}) {
   const navigate = useNavigate();
 
   const showMoreLink = {
@@ -14,7 +24,12 @@ export default function SideMenu({ isOpen, onClose, title, items, userRole, save
   };
 
   return (
-    <div id="sideMenu" className={`${styles.sideMenuContainer} ${isOpen ? styles.open : styles.closed}`}>
+    <div
+      id="sideMenu"
+      className={`${styles.sideMenuContainer} ${
+        isOpen ? styles.open : styles.closed
+      }`}
+    >
       <div className={styles.sideMenuHeader}>
         <h2 className={styles.sideMenuTitle}>{title}</h2>
         <button className={styles.sideMenuClose} onClick={onClose}>
@@ -87,7 +102,11 @@ export default function SideMenu({ isOpen, onClose, title, items, userRole, save
           } else {
             return (
               <div key={item.id} className={styles.sideMenuCard}>
-                <img src={item.image} alt={item.title} className={styles.sideMenuImage} />
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className={styles.sideMenuImage}
+                />
                 <h3 className={styles.sideMenuHeading}>{item.title}</h3>
                 <p className={styles.sideMenuText}>{item.description}</p>
               </div>
@@ -96,7 +115,13 @@ export default function SideMenu({ isOpen, onClose, title, items, userRole, save
         })}
       </div>
 
-      <button id="viewMoreBtn" onClick={() => window.open(showMoreLink[title], "_blank", "noopener,noreferrer")} className={styles.sideMenuViewmore}>
+      <button
+        id="viewMoreBtn"
+        onClick={() =>
+          window.open(showMoreLink[title], "_blank", "noopener,noreferrer")
+        }
+        className={styles.sideMenuViewmore}
+      >
         View More
       </button>
     </div>

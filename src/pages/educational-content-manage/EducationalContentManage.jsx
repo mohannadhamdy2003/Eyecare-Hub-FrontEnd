@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styles from "./educationalContentManage.module.css";
 import { useAllPosts, useAddPost, useUpdatePost, useDeletePost } from "../../redux/posts/postsApis.js";
-import EducationalCard from "../../components/educationalCard/EducationalCard";
+import EducationalCard from "../../components/educationalCard/EducationalCard.jsx";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { successMessage } from "../../redux/toasts";
+import { successMessage } from "../../redux/toasts.js";
 
 const validationSchema = Yup.object({
   title: Yup.string().required("Title is required"),
