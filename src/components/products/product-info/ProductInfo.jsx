@@ -1,4 +1,4 @@
-import styles from "./productInfo.module.css";
+import styles from "./ProductInfo.module.css";
 import { FaShoppingCart, FaArrowLeft, FaGlasses } from "react-icons/fa";
 import useCart from "../../../hooks/useCart";
 import { useNavigate, useParams } from "react-router-dom";
