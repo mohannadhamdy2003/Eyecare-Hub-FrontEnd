@@ -19,7 +19,7 @@ import {
 } from "../../redux/posts/postsApis";
 import { useSelector } from "react-redux";
 import { successMessage } from "../../redux/toasts"; // Ensure this import is present
-import EducationalCard from "../../components/educationalCard/EducationalCard";
+import EducationalCard from "../../components/EducationalCard/EducationalCard";
 
 // Validation schema for search and filters
 const searchFilterSchema = Yup.object().shape({
