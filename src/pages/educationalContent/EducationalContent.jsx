@@ -1,12 +1,25 @@
 import { useState, useMemo } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { FaEye, FaShieldAlt, FaExclamationTriangle, FaHeart, FaSearch, FaFilter, FaTimes } from "react-icons/fa";
+import {
+  FaEye,
+  FaShieldAlt,
+  FaExclamationTriangle,
+  FaHeart,
+  FaSearch,
+  FaFilter,
+  FaTimes,
+} from "react-icons/fa";
 import styles from "./educationalContent.module.css";
-import { useAllPosts, useRemoveSavedPost, useSavePost, useUserSavedPosts } from "../../redux/posts/postsApis";
+import {
+  useAllPosts,
+  useRemoveSavedPost,
+  useSavePost,
+  useUserSavedPosts,
+} from "../../redux/posts/postsApis";
 import { useSelector } from "react-redux";
 import { successMessage } from "../../redux/toasts"; // Ensure this import is present
-import EducationalCard from "../../components/educationalCard/EducationalCard";
+import EducationalCard from "../../components/EducationalCard/EducationalCard";
 
 // Validation schema for search and filters
 const searchFilterSchema = Yup.object().shape({
@@ -28,10 +41,19 @@ const EducationalContent = () => {
   const { data: posts = [], isLoading, error } = useAllPosts();
 
   // Compute unique filter options
-  const uniqueCategories = useMemo(() => [...new Set(posts.map((post) => post.category))], [posts]);
-  const uniqueTypes = useMemo(() => [...new Set(posts.map((post) => post.type))], [posts]);
-  const uniqueAuthors = useMemo(() => [...new Set(posts.map((post) => post.author))], [posts]);
-  if(user?.role==="doctor")  return <Navigate to="/unauthorized" />;
+  const uniqueCategories = useMemo(
+    () => [...new Set(posts.map((post) => post.category))],
+    [posts]
+  );
+  const uniqueTypes = useMemo(
+    () => [...new Set(posts.map((post) => post.type))],
+    [posts]
+  );
+  const uniqueAuthors = useMemo(
+    () => [...new Set(posts.map((post) => post.author))],
+    [posts]
+  );
+  if (user?.role === "doctor") return <Navigate to="/unauthorized" />;
 
   if (isLoading) {
     return (
@@ -43,7 +65,9 @@ const EducationalContent = () => {
                 <FaEye className={styles.headerIcon} />
               </div>
               <h1 className={styles.headerTitle}>Loading...</h1>
-              <p className={styles.headerSubtitle}>Fetching educational content...</p>
+              <p className={styles.headerSubtitle}>
+                Fetching educational content...
+              </p>
             </div>
           </div>
         </div>
@@ -61,14 +85,16 @@ const EducationalContent = () => {
                 <FaExclamationTriangle className={styles.headerIcon} />
               </div>
               <h1 className={styles.headerTitle}>Error Loading Content</h1>
-              <p className={styles.headerSubtitle}>Unable to fetch educational content. Please try again later.</p>
+              <p className={styles.headerSubtitle}>
+                Unable to fetch educational content. Please try again later.
+              </p>
             </div>
           </div>
         </div>
       </div>
     );
   }
-  
+
   return (
     <div className={styles.container}>
       {/* Header */}
@@ -79,7 +105,10 @@ const EducationalContent = () => {
               <FaEye className={styles.headerIcon} />
             </div>
             <h1 className={styles.headerTitle}>Eye Health Education Center</h1>
-            <p className={styles.headerSubtitle}>Comprehensive resources for maintaining healthy vision and preventing eye diseases</p>
+            <p className={styles.headerSubtitle}>
+              Comprehensive resources for maintaining healthy vision and
+              preventing eye diseases
+            </p>
             <div className={styles.headerFeatures}>
               <div className={styles.feature}>
                 <FaShieldAlt className={styles.featureIcon} />
@@ -100,7 +129,16 @@ const EducationalContent = () => {
 
       {/* Search and Filter Section */}
       <div className={styles.searchFilterSection}>
-        <Formik initialValues={{ searchQuery: "", category: "", type: "", author: "" }} validationSchema={searchFilterSchema} onSubmit={() => {}}>
+        <Formik
+          initialValues={{
+            searchQuery: "",
+            category: "",
+            type: "",
+            author: "",
+          }}
+          validationSchema={searchFilterSchema}
+          onSubmit={() => {}}
+        >
           {({ values, setFieldValue, resetForm }) => {
             const filteredPosts = posts.filter((post) => {
               const searchLower = values.searchQuery.toLowerCase();
@@ -111,14 +149,22 @@ const EducationalContent = () => {
                 post.category.toLowerCase().includes(searchLower) ||
                 post.author.toLowerCase().includes(searchLower);
 
-              const matchesCategory = !values.category || post.category === values.category;
+              const matchesCategory =
+                !values.category || post.category === values.category;
               const matchesType = !values.type || post.type === values.type;
-              const matchesAuthor = !values.author || post.author === values.author;
+              const matchesAuthor =
+                !values.author || post.author === values.author;
 
-              return matchesSearch && matchesCategory && matchesType && matchesAuthor;
+              return (
+                matchesSearch && matchesCategory && matchesType && matchesAuthor
+              );
             });
 
-            const activeFiltersCount = [values.category, values.type, values.author].filter(Boolean).length;
+            const activeFiltersCount = [
+              values.category,
+              values.type,
+              values.author,
+            ].filter(Boolean).length;
 
             return (
               <Form className={styles.form}>
@@ -126,25 +172,46 @@ const EducationalContent = () => {
                   {/* Search Input */}
                   <div className={styles.searchContainer}>
                     <FaSearch className={styles.searchIcon} />
-                    <Field name="searchQuery" type="text" placeholder="Search articles, topics, authors..." className={styles.searchInput} />
+                    <Field
+                      name="searchQuery"
+                      type="text"
+                      placeholder="Search articles, topics, authors..."
+                      className={styles.searchInput}
+                    />
                     {values.searchQuery && (
-                      <button type="button" onClick={() => setFieldValue("searchQuery", "")} className={styles.clearSearchButton}>
+                      <button
+                        type="button"
+                        onClick={() => setFieldValue("searchQuery", "")}
+                        className={styles.clearSearchButton}
+                      >
                         <FaTimes />
                       </button>
                     )}
                   </div>
 
                   {/* Filter Toggle */}
-                  <button type="button" onClick={() => setShowFilters(!showFilters)} className={styles.filterToggle}>
+                  <button
+                    type="button"
+                    onClick={() => setShowFilters(!showFilters)}
+                    className={styles.filterToggle}
+                  >
                     <FaFilter />
                     Filters
-                    {activeFiltersCount > 0 && <span className={styles.filterBadge}>{activeFiltersCount}</span>}
+                    {activeFiltersCount > 0 && (
+                      <span className={styles.filterBadge}>
+                        {activeFiltersCount}
+                      </span>
+                    )}
                   </button>
 
                   {/* Filter Dropdowns */}
                   {showFilters && (
                     <div className={styles.filterDropdowns}>
-                      <Field as="select" name="category" className={styles.filterSelect}>
+                      <Field
+                        as="select"
+                        name="category"
+                        className={styles.filterSelect}
+                      >
                         <option value="">All Categories</option>
                         {uniqueCategories.map((cat) => (
                           <option key={cat} value={cat}>
@@ -152,7 +219,11 @@ const EducationalContent = () => {
                           </option>
                         ))}
                       </Field>
-                      <Field as="select" name="type" className={styles.filterSelect}>
+                      <Field
+                        as="select"
+                        name="type"
+                        className={styles.filterSelect}
+                      >
                         <option value="">All Types</option>
                         {uniqueTypes.map((t) => (
                           <option key={t} value={t}>
@@ -160,7 +231,11 @@ const EducationalContent = () => {
                           </option>
                         ))}
                       </Field>
-                      <Field as="select" name="author" className={styles.filterSelect}>
+                      <Field
+                        as="select"
+                        name="author"
+                        className={styles.filterSelect}
+                      >
                         <option value="">All Authors</option>
                         {uniqueAuthors.map((auth) => (
                           <option key={auth} value={auth}>
@@ -176,7 +251,9 @@ const EducationalContent = () => {
                     {values.searchQuery && (
                       <span className={styles.filterChip}>
                         Search: "{values.searchQuery}"
-                        <button onClick={() => setFieldValue("searchQuery", "")}>
+                        <button
+                          onClick={() => setFieldValue("searchQuery", "")}
+                        >
                           <FaTimes />
                         </button>
                       </span>
@@ -210,10 +287,18 @@ const EducationalContent = () => {
                   {/* Results Header */}
                   <div className={styles.resultsHeader}>
                     <span className={styles.resultsCount}>
-                      {filteredPosts.length} {filteredPosts.length === 1 ? "article" : "articles"}
+                      {filteredPosts.length}{" "}
+                      {filteredPosts.length === 1 ? "article" : "articles"}
                     </span>
-                    {(values.searchQuery || values.category || values.type || values.author) && (
-                      <button type="button" onClick={resetForm} className={styles.clearAllButton}>
+                    {(values.searchQuery ||
+                      values.category ||
+                      values.type ||
+                      values.author) && (
+                      <button
+                        type="button"
+                        onClick={resetForm}
+                        className={styles.clearAllButton}
+                      >
                         Clear all
                       </button>
                     )}
@@ -225,7 +310,10 @@ const EducationalContent = () => {
                   <div className={styles.noResults}>
                     <FaSearch className={styles.noResultsIcon} />
                     <h3>No articles found</h3>
-                    <p>Try adjusting your search terms or filters to find what you're looking for.</p>
+                    <p>
+                      Try adjusting your search terms or filters to find what
+                      you're looking for.
+                    </p>
                     <button onClick={resetForm}>Clear all filters</button>
                   </div>
                 ) : (
@@ -248,7 +336,6 @@ const EducationalContent = () => {
           }}
         </Formik>
       </div>
-
     </div>
   );
 };

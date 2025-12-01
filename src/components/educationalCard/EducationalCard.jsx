@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaBook, FaPlay, FaExclamationTriangle, FaImage, FaHeart, FaEye, FaChevronRight, FaClock, FaUser, FaRegHeart, FaLink } from "react-icons/fa";
-import styles from "./educationalCard.module.css";
+import styles from "./EducationalCard.module.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 

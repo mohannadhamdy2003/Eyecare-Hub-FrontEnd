@@ -1,14 +1,21 @@
 import { useState } from "react";
 import styles from "./educationalContentManage.module.css";
-import { useAllPosts, useAddPost, useUpdatePost, useDeletePost } from "../../redux/posts/postsApis.js";
-import EducationalCard from "../../components/educationalCard/EducationalCard.jsx";
+import {
+  useAllPosts,
+  useAddPost,
+  useUpdatePost,
+  useDeletePost,
+} from "../../redux/posts/postsApis.js";
+import EducationalCard from "../../components/EducationalCard/EducationalCard.jsx";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { successMessage } from "../../redux/toasts.js";
 
 const validationSchema = Yup.object({
   title: Yup.string().required("Title is required"),
-  type: Yup.string().oneOf(["article", "video", "image-article"], "Invalid type").required("Type is required"),
+  type: Yup.string()
+    .oneOf(["article", "video", "image-article"], "Invalid type")
+    .required("Type is required"),
   category: Yup.string().required("Category is required"),
   readTime: Yup.string().required("Read Time is required"),
   author: Yup.string().required("Author is required"),
@@ -69,7 +76,9 @@ const EducationalContentManage = () => {
   };
 
   const filteredPosts = posts.filter(
-    (post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()) || post.description.toLowerCase().includes(searchQuery.toLowerCase())
+    (post) =>
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -85,7 +94,10 @@ const EducationalContentManage = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className={styles.addButton} onClick={() => handleOpenModal()}>
+            <button
+              className={styles.addButton}
+              onClick={() => handleOpenModal()}
+            >
               Add Post
             </button>
           </div>
@@ -94,7 +106,12 @@ const EducationalContentManage = () => {
           <div className={styles.postGrid}>
             {filteredPosts.map((post) => (
               <div key={post.id} className={styles.postCardWrapper}>
-                <EducationalCard card={post} role="admin" userPosts={[]} successMessage={successMessage}>
+                <EducationalCard
+                  card={post}
+                  role="admin"
+                  userPosts={[]}
+                  successMessage={successMessage}
+                >
                   <div className={styles.actionButtons}>
                     <button
                       className={styles.editButton}
@@ -145,7 +162,11 @@ const EducationalContentManage = () => {
                   <div className={styles.formGroup}>
                     <label>Title</label>
                     <Field name="title" type="text" className={styles.input} />
-                    <ErrorMessage name="title" component="div" className={styles.error} />
+                    <ErrorMessage
+                      name="title"
+                      component="div"
+                      className={styles.error}
+                    />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Type</label>
@@ -155,40 +176,82 @@ const EducationalContentManage = () => {
                       <option value="video">Video</option>
                       <option value="image-article">Image Article</option>
                     </Field>
-                    <ErrorMessage name="type" component="div" className={styles.error} />
+                    <ErrorMessage
+                      name="type"
+                      component="div"
+                      className={styles.error}
+                    />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Category</label>
                     <Field name="category" as="select" className={styles.input}>
                       <option value="">Select Category</option>
                       <option value="General Care">General Care</option>
-                      <option value="Disease Prevention">Disease Prevention</option>
+                      <option value="Disease Prevention">
+                        Disease Prevention
+                      </option>
                       <option value="Diabetes & Eyes">Diabetes & Eyes</option>
-                      <option value="Age-Related Conditions">Age-Related Conditions</option>
+                      <option value="Age-Related Conditions">
+                        Age-Related Conditions
+                      </option>
                       <option value="Modern Eye Care">Modern Eye Care</option>
-                      <option value="Lifestyle & Nutrition">Lifestyle & Nutrition</option>
+                      <option value="Lifestyle & Nutrition">
+                        Lifestyle & Nutrition
+                      </option>
                     </Field>
-                    <ErrorMessage name="category" component="div" className={styles.error} />
+                    <ErrorMessage
+                      name="category"
+                      component="div"
+                      className={styles.error}
+                    />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Read Time</label>
-                    <Field name="readTime" type="text" className={styles.input} />
-                    <ErrorMessage name="readTime" component="div" className={styles.error} />
+                    <Field
+                      name="readTime"
+                      type="text"
+                      className={styles.input}
+                    />
+                    <ErrorMessage
+                      name="readTime"
+                      component="div"
+                      className={styles.error}
+                    />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Author</label>
                     <Field name="author" type="text" className={styles.input} />
-                    <ErrorMessage name="author" component="div" className={styles.error} />
+                    <ErrorMessage
+                      name="author"
+                      component="div"
+                      className={styles.error}
+                    />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Description</label>
-                    <Field name="description" as="textarea" className={styles.input} />
-                    <ErrorMessage name="description" component="div" className={styles.error} />
+                    <Field
+                      name="description"
+                      as="textarea"
+                      className={styles.input}
+                    />
+                    <ErrorMessage
+                      name="description"
+                      component="div"
+                      className={styles.error}
+                    />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Content</label>
-                    <Field name="content" as="textarea" className={styles.input} />
-                    <ErrorMessage name="content" component="div" className={styles.error} />
+                    <Field
+                      name="content"
+                      as="textarea"
+                      className={styles.input}
+                    />
+                    <ErrorMessage
+                      name="content"
+                      component="div"
+                      className={styles.error}
+                    />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Icon</label>
@@ -196,18 +259,32 @@ const EducationalContentManage = () => {
                       <option value="">Select Icon</option>
                       <option value="FaBook">Book</option>
                       <option value="FaPlay">Play</option>
-                      <option value="FaExclamationTriangle">Exclamation Triangle</option>
+                      <option value="FaExclamationTriangle">
+                        Exclamation Triangle
+                      </option>
                       <option value="FaImage">Image</option>
                       <option value="FaHeart">Heart</option>
                       <option value="FaEye">Eye</option>
                     </Field>
-                    <ErrorMessage name="icon" component="div" className={styles.error} />
+                    <ErrorMessage
+                      name="icon"
+                      component="div"
+                      className={styles.error}
+                    />
                   </div>
                   <div className={styles.formButtons}>
-                    <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+                    <button
+                      type="submit"
+                      className={styles.submitButton}
+                      disabled={isSubmitting}
+                    >
                       {selectedPost ? "Update" : "Add"} Post
                     </button>
-                    <button type="button" className={styles.cancelButton} onClick={handleCloseModal}>
+                    <button
+                      type="button"
+                      className={styles.cancelButton}
+                      onClick={handleCloseModal}
+                    >
                       Cancel
                     </button>
                   </div>
