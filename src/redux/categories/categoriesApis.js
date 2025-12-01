@@ -4,7 +4,7 @@ import axios from "axios";
 export const getCategories = async (type) => {
   try {
     const res = await axios.get(
-      `http://eyecare-hub-backend-production.up.railway.app/${type}`
+      `https://eyecare-hub-backend-production.up.railway.app/${type}`
     );
     return res.data;
   } catch (error) {
