@@ -6,7 +6,7 @@ import {
   useUpdatePost,
   useDeletePost,
 } from "../../redux/posts/postsApis.js";
-import EducationalCard from "../../components/educationalCard/EducationalCard.jsx";
+import EducationalCard from "../../components/EducationalCard/EducationalCard.jsx";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { successMessage } from "../../redux/toasts.js";
