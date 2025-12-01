@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const URL = "http://eyecare-hub-backend-production.up.railway.app/users";
-const URL1 = "http://eyecare-hub-backend-production.up.railway.app/doctors";
+const URL = "https://eyecare-hub-backend-production.up.railway.app/users";
+const URL1 = "https://eyecare-hub-backend-production.up.railway.app/doctors";
 
 // Fetch user diagnosis
 const getUserDiagnosis = async (userId) => {
