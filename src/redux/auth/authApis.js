@@ -3,8 +3,9 @@ import axios from "axios";
 import { successMessage } from "../toasts";
 import { updateCart } from "./authSlice";
 
-const USERS_URL = "http://eyecare-hub-backend-production.up.railway.app/users";
-const DOCTORS_URL = "http://eyecare-hub-backend-production.up.railway.app/doctors";
+const USERS_URL = "https://eyecare-hub-backend-production.up.railway.app/users";
+
+const DOCTORS_URL = "https://eyecare-hub-backend-production.up.railway.app/doctors";
 
 // Register user
 
@@ -74,7 +75,7 @@ export const loginApi = createAsyncThunk(
     try {
       // 1. Check if user is admin
       const adminRes = await axios.get(
-        "eyecare-hub-backend-production.up.railway.app/admin",
+        "https://eyecare-hub-backend-production.up.railway.app/admin",
         {
           params: { email, password },
         }
