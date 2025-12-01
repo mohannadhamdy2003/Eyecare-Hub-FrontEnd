@@ -3,8 +3,8 @@ import axios from "axios";
 import { successMessage } from "../toasts";
 import { updateCart } from "./authSlice";
 
-const USERS_URL = "eyecare-hub-backend-production.up.railway.app/users";
-const DOCTORS_URL = "eyecare-hub-backend-production.up.railway.app/doctors";
+const USERS_URL = "http://eyecare-hub-backend-production.up.railway.app/users";
+const DOCTORS_URL = "http://eyecare-hub-backend-production.up.railway.app/doctors";
 
 // Register user
 
