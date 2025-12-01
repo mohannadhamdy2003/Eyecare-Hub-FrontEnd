@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { successMessage } from "../toasts";
 
-const URL = "http://eyecare-hub-backend-production.up.railway.app/appointments";
+const URL = "https://eyecare-hub-backend-production.up.railway.app/appointments";
 
 // Get User Appointments
 const getUserAppointments = async (id) => {
