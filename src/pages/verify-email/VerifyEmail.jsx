@@ -9,7 +9,7 @@ const VerifyEmail = () => {
     const token = new URLSearchParams(window.location.search).get("token");
     axios
       .get(
-        `eyecare-hub-backend-production.up.railway.app/api/auth/verify-email?token=${token}`
+        `eyecare-hub-backend-production-8671.up.railway.app/api/auth/verify-email?token=${token}`
       )
       .then(() => setStatus("success"))
       .catch(() => setStatus("error"));
