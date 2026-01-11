@@ -29,7 +29,7 @@ const MedicalAppointmentBooking = () => {
     const getAppointments = async () => {
       try {
         const res = await axios.get(
-          "eyecare-hub-backend-production.up.railway.app/appointments"
+          "eyecare-hub-backend-production-8671.up.railway.app/appointments"
         );
         setAppointments_for_mostafa(
           res.data.filter((ap) => ["Pending", "Approved"].includes(ap.status))
