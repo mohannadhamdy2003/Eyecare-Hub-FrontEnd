@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const URL = "http://eyecare-hub-backend-production.up.railway.app/doctors";
+const URL = "http://eyecare-hub-backend-production-8671.up.railway.app/doctors";
 
 // update doctor rating function
 const updateRating = (reviews) => {
