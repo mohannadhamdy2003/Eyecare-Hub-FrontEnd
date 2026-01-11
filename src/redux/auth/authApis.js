@@ -3,9 +3,9 @@ import axios from "axios";
 import { successMessage } from "../toasts";
 import { updateCart } from "./authSlice";
 
-const USERS_URL = "https://eyecare-hub-backend-production.up.railway.app/users";
+const USERS_URL = "https://eyecare-hub-backend-production-8671.up.railway.app/users";
 
-const DOCTORS_URL = "https://eyecare-hub-backend-production.up.railway.app/doctors";
+const DOCTORS_URL = "https://eyecare-hub-backend-production-8671.up.railway.app/doctors";
 
 // Register user
 
@@ -75,7 +75,7 @@ export const loginApi = createAsyncThunk(
     try {
       // 1. Check if user is admin
       const adminRes = await axios.get(
-        "https://eyecare-hub-backend-production.up.railway.app/admin",
+        "https://eyecare-hub-backend-production-8671.up.railway.app/admin",
         {
           params: { email, password },
         }
@@ -234,7 +234,7 @@ export const AppointmentOperationsApi = createAsyncThunk(
     try {
       if (operation === "add") {
         const appointmentsResponse = await axios.post(
-          "eyecare-hub-backend-production.up.railway.app/appointments",
+          "eyecare-hub-backend-production-8671.up.railway.app/appointments",
           data
         );
         successMessage(success_message);
@@ -246,7 +246,7 @@ export const AppointmentOperationsApi = createAsyncThunk(
       //
       else if (operation === "remove") {
         const appointmentsResponse = await axios.delete(
-          `eyecare-hub-backend-production.up.railway.app/appointments/${data}`
+          `eyecare-hub-backend-production-8671.up.railway.app/appointments/${data}`
         );
         successMessage(cancle_message);
         return {
