@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
-const URL = "https://eyecare-hub-backend-production.up.railway.app/products";
+const URL = "https://eyecare-hub-backend-production-8671.up.railway.app/products";
 
 // Get all products
 const getProducts = async () => {
